@@ -1,20 +1,45 @@
+$header-heigth: 60px;
+$border: #E8F1FB;
+
 .drop-container {
   width: 400px;
   height: 590px;
 
   background-color: #ffffff;
-  border: 1px solid #E8F1FB;
+  border: 1px solid $border;
 
   &__header {
-    height: 60px;
-  }
-
-  &__separator {
-    height: 1px;
-    background-color: #E8F1FB;
+    height: $header-heigth;
   }
 
   &__body {
+    height: calc(100% - #{$header-heigth});
+    
+    padding: 20px;
+    box-sizing: border-box;
+
+    border-top: 1px solid $border;
+  }
+
+  &__drop-area {
     height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &-hovered {
+      background-color: #F5F9FF;
+      border: 1px dashed #4991E5;
+    }
+  }
+
+  &__icon-label {
+    font-size: 12px;
+    line-height: 15px;
+    
+    margin-top: 9px;
+    color: #324964;
   }
 }

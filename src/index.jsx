@@ -1,14 +1,22 @@
 // @flow
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 import { DropAndUpload } from './drop-and-upload'
 import './styles.scss'
 
 const App = () => {
+  const [imageURL, setImageURL] = useState<string>(null)
+
+  const onChange = (url: string) => {
+    setImageURL(url)
+
+    console.log('Got the new URL')
+  }
+
   return (
     <main className="app-container">
-      <DropAndUpload />
+      <DropAndUpload value={imageURL} onChange={onChange} />
     </main>
   )
 }
