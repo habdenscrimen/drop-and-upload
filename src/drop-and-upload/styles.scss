@@ -1,0 +1,20 @@
+.drop-container {
+  width: 400px;
+  height: 590px;
+
+  background-color: #ffffff;
+  border: 1px solid #E8F1FB;
+
+  &__header {
+    height: 60px;
+  }
+
+  &__separator {
+    height: 1px;
+    background-color: #E8F1FB;
+  }
+
+  &__body {
+    height: 100%;
+  }
+}
