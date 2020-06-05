@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, DragEvent, useEffect, ChangeEvent } from 'react'
+import React, { useState, DragEvent, ChangeEvent } from 'react'
 
 import { fileToBase64, fakeUploadingRequest } from './utils'
 import dropPlaceholder from '../assets/icons/drop-placeholder.svg'
@@ -21,10 +21,6 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
   const [progress, setProgress] = useState(null)
   const [request, setRequest] = useState<XMLHttpRequest>(null)
 
-  useEffect(() => {
-    console.log('UPDATED URL')
-  }, [url])
-
   const reset = () => {
     setProgress(null)
     setRequest(null)
@@ -32,8 +28,9 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
   }
 
   const cancelUploading = () => {
-    request.abort()
-    reset()
+    if (request) {
+      request.abort()
+    }
   }
 
   const updateURL = (url: string) => {
@@ -80,7 +77,10 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
         base64,
         setProgress,
         () => updateURL(base64),
-        cancelUploading,
+        () => {
+          cancelUploading()
+          reset()
+        },
       )
 
       // save request to be able to abort it by clicking button
@@ -108,7 +108,15 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
           {progress ? (
             <div>{progress}</div>
           ) : (
-            <img src={dropPlaceholder} alt="Drop here" height={80} width={80} />
+            <div className="preview-container">
+              <img
+                className={`preview-container__image ${
+                  url ? 'preview-container__image-rounded' : ''
+                }`}
+                src={url || dropPlaceholder}
+                alt="Drop here"
+              />
+            </div>
           )}
 
           <span className="drop-container__icon-label">
