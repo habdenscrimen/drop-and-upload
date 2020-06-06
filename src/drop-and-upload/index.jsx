@@ -6,7 +6,7 @@ import { fileToBase64, fakeUploadingRequest } from './utils'
 import './styles.scss'
 
 const imageParams = {
-  size: 3544,
+  size: 100,
   imageTypes: ['image/png', 'image/jpeg'],
 }
 
@@ -25,6 +25,7 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
     setProgress(null)
     setRequest(null)
     setError(null)
+    setHovering(false)
   }
 
   const abortUploading = () => {
@@ -53,7 +54,7 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
 
   const dropUpload = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault()
-    setHovering(false)
+    reset()
 
     const { files } = e.dataTransfer
 
@@ -124,7 +125,7 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
             )}
           </div>
 
-          {error && <p>{error}</p>}
+          {error && <p className="drop-container__error">{error}</p>}
         </div>
       </div>
     </div>

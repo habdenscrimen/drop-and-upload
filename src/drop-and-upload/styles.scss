@@ -18,6 +18,7 @@
 
   &__drop-area {
     height: 100%;
+    position: relative;
 
     display: flex;
     justify-content: center;
@@ -32,7 +33,7 @@
 
   &__or-separator {
     font-size: 12px;
-    margin: 10px 0;
+    margin: 10px 0 5px 0;
     line-height: 15px;
     color: $secondary;
   }
@@ -46,5 +47,13 @@
     padding: 0;
     color: $primary;
     cursor: pointer;
+  }
+
+  &__error {
+    position: absolute;
+    bottom: 50px;
+
+    font-size: 14px;
+    color: #ff0000;
   }
 }
