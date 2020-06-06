@@ -1,6 +1,7 @@
 @import '../../../styles/variables.scss';
 
 .preview-container {
+  position: relative;
   height: 80px;
   width: 80px;
 
@@ -10,6 +11,44 @@
 
   border-radius: 50%;
   border: 1px solid $preview-color;
+
+  
+  // circle progress
+  $step: 1; // step of % for created classes
+  $loops: 100;
+  $increment: (360 / $loops);
+  $half: round($loops / 2);
+  
+  @for $i from 0 through $loops {
+    &__progress-#{$i*$step} {
+      @if $i < 50 {
+        $nextdeg: 90deg + ( $increment * $i );
+        background-image: linear-gradient(90deg, #fff 50%, transparent 50%, transparent), linear-gradient($nextdeg, $uploading-progress-color 50%, #fff 50%, #fff);
+      }
+      @else {
+        $nextdeg: -90deg + ( $increment * ( $i - $half ) );
+        background-image: linear-gradient($nextdeg, $uploading-progress-color 50%, transparent 50%, transparent), linear-gradient(270deg, $uploading-progress-color 50%, #fff 50%, #fff);
+      }
+    }
+  }
+
+  &__inner {
+    width: 98%;
+    height: 98%;
+    top: auto;
+    left: auto;
+    
+    border-radius: 50%;
+    background: #ffffff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > img {
+      height: 46px;
+    }
+  }
 
   &__image {
     height: 46px;

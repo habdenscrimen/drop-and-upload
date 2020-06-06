@@ -12,9 +12,15 @@ type Props = {
 
 export const Preview = ({ uploading, progress, url }: Props) => (
   <Fragment>
-    <div className="preview-container">
-      {uploading ? (
-        <span>{progress || 0}%</span>
+    <div
+      className={`preview-container ${
+        progress ? `preview-container__progress-${progress}` : ''
+      }`}
+    >
+      {progress ? (
+        <div className="preview-container__inner">
+          <img src={dropPlaceholder} alt={progress} />
+        </div>
       ) : (
         <img
           className={`preview-container__image ${
