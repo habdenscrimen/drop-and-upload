@@ -1,7 +1,7 @@
 // @flow
 import React, { useState, DragEvent, ChangeEvent } from 'react'
 
-import { Preview, FileInput } from './components'
+import { Preview, FileInput, Header } from './components'
 import { fileToBase64, fakeUploadingRequest } from './utils'
 import './styles.scss'
 
@@ -95,7 +95,7 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
 
   return (
     <div className="drop-container">
-      <div className="drop-container__header">header</div>
+      <Header />
 
       <div className="drop-container__body">
         <div

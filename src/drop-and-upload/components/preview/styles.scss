@@ -1,11 +1,15 @@
+@import '../../../variables.scss';
+
 .preview-container {
   height: 80px;
   width: 80px;
-  border-radius: 50%;
-  border: 1px solid #D1E3F8;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  border-radius: 50%;
+  border: 1px solid $preview-color;
 
   &__image {
     height: 46px;
@@ -14,5 +18,13 @@
       border-radius: 50%;
       height: 80px;
     }
+  }
+
+  &__icon-label {
+    font-size: 12px;
+    line-height: 15px;
+    
+    margin-top: 9px;
+    color: #324964;
   }
 }

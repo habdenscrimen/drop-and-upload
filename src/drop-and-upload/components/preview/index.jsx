@@ -25,7 +25,7 @@ export const Preview = ({ progress, url }: Props) => (
       )}
     </div>
 
-    <span className="drop-container__icon-label">
+    <span className="preview-container__icon-label">
       {progress ? 'Uploading' : 'Drag & drop here'}
     </span>
   </Fragment>

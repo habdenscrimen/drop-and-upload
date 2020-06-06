@@ -1,16 +1,11 @@
-$header-heigth: 60px;
-$border: #E8F1FB;
+@import '../variables.scss';
 
 .drop-container {
   width: 400px;
   height: 590px;
 
   background-color: #ffffff;
-  border: 1px solid $border;
-
-  &__header {
-    height: $header-heigth;
-  }
+  border: 1px solid $border-color;
 
   &__body {
     height: calc(100% - #{$header-heigth});
@@ -18,7 +13,7 @@ $border: #E8F1FB;
     padding: 20px;
     box-sizing: border-box;
 
-    border-top: 1px solid $border;
+    border-top: 1px solid $border-color;
   }
 
   &__drop-area {
@@ -30,24 +25,16 @@ $border: #E8F1FB;
     flex-direction: column;
 
     &-hovered {
-      background-color: #F5F9FF;
-      border: 1px dashed #4991E5;
+      background-color: $background;
+      border: 1px dashed $primary;
     }
-  }
-
-  &__icon-label {
-    font-size: 12px;
-    line-height: 15px;
-    
-    margin-top: 9px;
-    color: #324964;
   }
 
   &__or-separator {
     font-size: 12px;
     margin: 10px 0;
     line-height: 15px;
-    color: #6B85A3;
+    color: $secondary;
   }
 
   &__cancel-button {
@@ -57,7 +44,7 @@ $border: #E8F1FB;
     outline: none;
     border: none;
     padding: 0;
-    color: #4991E5;
+    color: $primary;
     cursor: pointer;
   }
 }

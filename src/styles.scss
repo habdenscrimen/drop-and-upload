@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import './variables.scss';
 
 body {
   margin: 0;
@@ -13,5 +14,5 @@ body {
   justify-content: center;
   align-items: center;
 
-  background-color: #f5f9ff;
+  background-color: $background;
 }
