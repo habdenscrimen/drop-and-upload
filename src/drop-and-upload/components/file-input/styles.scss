@@ -16,5 +16,8 @@
 
     color: $primary;
     cursor: pointer;
+
+    // enable previously disabled pointer events
+    pointer-events: auto !important;
   }
 }

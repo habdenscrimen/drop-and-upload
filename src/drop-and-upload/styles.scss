@@ -29,6 +29,11 @@
       background-color: $background;
       border: 1px dashed $primary;
     }
+
+    // prevents dragleave from firing when dragging into a child element
+    & * {
+      pointer-events: none;
+    }
   }
 
   &__or-separator {
@@ -48,6 +53,9 @@
     padding: 0;
     color: $primary;
     cursor: pointer;
+
+    // enable previously disabled pointer events
+    pointer-events: auto !important;
   }
 
   &__error {

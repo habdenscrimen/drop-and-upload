@@ -1,19 +1,20 @@
 // @flow
 import React, { Fragment } from 'react'
 
-import dropPlaceholder from '../../../assets/icons/drop-placeholder.svg'
+import dropPlaceholder from '../../../assets/drop-placeholder.svg'
 import './styles.scss'
 
 type Props = {
+  uploading: boolean,
   progress: number,
   url: string,
 }
 
-export const Preview = ({ progress, url }: Props) => (
+export const Preview = ({ uploading, progress, url }: Props) => (
   <Fragment>
     <div className="preview-container">
-      {progress ? (
-        <span>{progress}%</span>
+      {uploading ? (
+        <span>{progress || 0}%</span>
       ) : (
         <img
           className={`preview-container__image ${
@@ -26,7 +27,7 @@ export const Preview = ({ progress, url }: Props) => (
     </div>
 
     <span className="preview-container__icon-label">
-      {progress ? 'Uploading' : 'Drag & drop here'}
+      {uploading ? 'Uploading' : url ? 'Drag & drop here to replace' : 'Drag & drop here'}
     </span>
   </Fragment>
 )

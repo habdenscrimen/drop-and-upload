@@ -3,12 +3,12 @@
 // load 'Proxima Nova' font from files because it isn't free
 @font-face {
   font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./fonts/ProximaNova-Regular.otf) format('otf');
+  src: local('Proxima Nova'), url(../assets/ProximaNova-Regular.otf) format('otf');
 }
 
 @font-face {
   font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./fonts/ProximaNova-Bold.otf) format('otf');
+  src: local('Proxima Nova'), url(../assets/ProximaNova-Bold.otf) format('otf');
 }
 
 body {
@@ -16,7 +16,7 @@ body {
   font-family: 'Proxima Nova', sans-serif;
 }
 
-.app-container {
+#app-container {
   height: 100vh;
 
   display: flex;

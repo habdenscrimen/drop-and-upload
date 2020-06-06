@@ -1,60 +1,68 @@
 // @flow
-export const fileToBase64 = (file: File, size: number): Promise<string> =>
+
+export const fileToBase64 = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader()
 
-    reader.onload = (e) => {
-      const img = new Image()
-      img.src = e.target.result
+    reader.addEventListener('load', (e) => {
+      resolve(e.target.result)
+    })
 
-      img.onload = () => {
-        // make sure the image is the correct size
-        if (img.width === size && img.height === size) {
-          // if the image is the correct size, return it in base64
-          resolve(e.target.result)
-        } else {
-          // otherwise throw an error
-          reject(new Error('Invalid image size'))
-        }
-      }
-    }
+    reader.addEventListener('error', (e) => {
+      reject(e.target.error)
+    })
 
-    // start reading file
     reader.readAsDataURL(file)
   })
 
-export const fakeUploadingRequest = (
-  base64: string,
-  onProgress: (progress: number) => void,
-  onFinish: () => void,
-  onError: () => void,
-) => {
-  // use XMLHttpRequest because it's impossible to track upload progress with 'fetch'
-  const xhr = new XMLHttpRequest()
+export const validateImageResolution = (
+  imageData: string,
+  width: number,
+  height: number,
+): Promise<boolean> =>
+  new Promise((resolve) => {
+    // load image in order to check width and height
+    const img = new Image()
 
-  // send fake request to 'jsonplaceholder' just for testing
-  xhr.open('POST', 'https://jsonplaceholder.typicode.com/posts')
-  xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+    img.src = imageData
 
-  // calculate progress percentage
-  xhr.upload.onprogress = (e) => {
-    const percent = e.lengthComputable ? Math.round((e.loaded / e.total) * 100) : 0
+    img.addEventListener('load', () => {
+      // check if image has correct size
+      if (img.width === width && img.height === height) {
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    })
+  })
 
-    onProgress(percent)
-  }
+export const uploadImage = (
+  request: XMLHttpRequest,
+  imageData: string,
+  onProgress: (percentage: number) => {},
+): Promise<string> =>
+  new Promise((resolve, reject) => {
+    // send fake request to 'jsonplaceholder'
+    request.open('POST', 'https://jsonplaceholder.typicode.com/posts')
+    request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
 
-  xhr.onload = () => {
-    // when request is complete, check its status
-    if (xhr.status >= 200 && xhr.status < 300) {
-      onFinish()
-    } else {
-      onError()
-    }
-  }
+    // listen to progress events
+    request.upload.addEventListener('progress', (e) => {
+      // calculate uploading percentage based on loaded and total bytes
+      const percent = e.lengthComputable ? Math.round((e.loaded / e.total) * 100) : 0
 
-  // send the fake request
-  xhr.send(JSON.stringify({ body: base64 }))
+      // fire onProgress callback
+      onProgress(percent)
+    })
 
-  // return XMLHttpRequest to be able to abort the request
-  return xhr
-}
+    // listen to load events
+    request.addEventListener('load', () => {
+      if (request.status >= 200 && request.status < 300) {
+        resolve(imageData)
+      } else {
+        reject(request.statusText)
+      }
+    })
+
+    request.send(JSON.stringify({ body: imageData }))
+  })
