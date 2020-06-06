@@ -16,32 +16,32 @@ type Props = {
 }
 
 export const DropAndUpload = ({ value: url, onChange }: Props) => {
-  const [hovering, setHovering] = useState(false)
-  const [error, setError] = useState(null)
-  const [progress, setProgress] = useState(null)
+  const [dragging, setDragging] = useState(false)
+  const [error, setError] = useState<string>(null)
+  const [progress, setProgress] = useState<number>(null)
   const [request, setRequest] = useState<XMLHttpRequest>(null)
 
-  const reset = () => {
+  const resetState = () => {
     setProgress(null)
     setRequest(null)
     setError(null)
-    setHovering(false)
+    setDragging(false)
   }
 
-  const abortUploading = () => {
+  const abortRequest = () => {
     if (request) {
       request.abort()
     }
   }
 
   const cancelUploading = () => {
-    abortUploading()
-    reset()
+    abortRequest()
+    resetState()
   }
 
   const updateURL = (url: string) => {
     onChange(url)
-    reset()
+    resetState()
   }
 
   // enable 'copy' cursor effect when dragging
@@ -54,7 +54,7 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
 
   const dropUpload = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault()
-    reset()
+    resetState()
 
     const { files } = e.dataTransfer
 
@@ -90,7 +90,7 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
       setRequest(request)
     } catch (error) {
       setError(error.message)
-      abortUploading()
+      abortRequest()
     }
   }
 
@@ -101,27 +101,27 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
       <div className="drop-container__body">
         <div
           className={`drop-container__drop-area ${
-            hovering ? 'drop-container__drop-area-hovered' : ''
+            dragging ? 'drop-container__drop-area-hovered' : ''
           }`}
           onDragOver={handleDragOver}
           onDrop={dropUpload}
-          onDragEnter={() => setHovering(true)}
-          onDragLeave={() => setHovering(false)}
+          onDragEnter={() => setDragging(true)}
+          onDragLeave={() => setDragging(false)}
         >
           <Preview progress={progress} url={url} />
 
           <p className="drop-container__or-separator">- or -</p>
 
           <div>
-            {progress ? (
-              <button onClick={cancelUploading} className="drop-container__cancel-button">
-                Cancel
-              </button>
-            ) : (
+            {!progress ? (
               <FileInput
                 accept={imageParams.imageTypes.join(',')}
                 onChange={inputUpload}
               />
+            ) : (
+              <button onClick={cancelUploading} className="drop-container__cancel-button">
+                Cancel
+              </button>
             )}
           </div>
 
