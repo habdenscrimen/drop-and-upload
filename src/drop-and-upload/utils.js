@@ -38,7 +38,7 @@ export const fakeUploadingRequest = (
 
   // calculate progress percentage
   xhr.upload.onprogress = (e) => {
-    const percent = e.lengthComputable ? (e.loaded / e.total) * 100 : 0
+    const percent = e.lengthComputable ? Math.round((e.loaded / e.total) * 100) : 0
 
     onProgress(percent)
   }

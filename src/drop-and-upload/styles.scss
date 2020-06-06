@@ -42,23 +42,22 @@ $border: #E8F1FB;
     margin-top: 9px;
     color: #324964;
   }
-}
 
-.preview-container {
-  height: 80px;
-  width: 80px;
-  border-radius: 50%;
-  border: 1px solid #D1E3F8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  &__or-separator {
+    font-size: 12px;
+    margin: 10px 0;
+    line-height: 15px;
+    color: #6B85A3;
+  }
 
-  &__image {
-    height: 46px;
-
-    &-rounded {
-      border-radius: 50%;
-      height: 80px;
-    }
+  &__cancel-button {
+    font-size: 12px;
+    line-height: 15px;
+    
+    outline: none;
+    border: none;
+    padding: 0;
+    color: #4991E5;
+    cursor: pointer;
   }
 }

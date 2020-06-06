@@ -1,0 +1,18 @@
+.file-input {
+	width: 0.1px;
+  height: 0.1px;
+  
+	opacity: 0;
+  z-index: -1;
+  
+	overflow: hidden;
+	position: absolute;
+  
+  &__label {
+    font-size: 12px;
+    line-height: 15px;
+
+    color: #4991E5;
+    cursor: pointer;
+  }
+}

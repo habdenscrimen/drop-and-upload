@@ -1,18 +1,18 @@
 // @flow
 import React, { useState, DragEvent, ChangeEvent } from 'react'
 
+import { Preview, FileInput } from './components'
 import { fileToBase64, fakeUploadingRequest } from './utils'
-import dropPlaceholder from '../assets/icons/drop-placeholder.svg'
 import './styles.scss'
+
+const imageParams = {
+  size: 3544,
+  imageTypes: ['image/png', 'image/jpeg'],
+}
 
 type Props = {
   value: string,
   onChange: (url: string) => void,
-}
-
-const imageParams = {
-  size: 100,
-  imageTypes: ['image/png', 'image/jpeg'],
 }
 
 export const DropAndUpload = ({ value: url, onChange }: Props) => {
@@ -27,10 +27,15 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
     setError(null)
   }
 
-  const cancelUploading = () => {
+  const abortUploading = () => {
     if (request) {
       request.abort()
     }
+  }
+
+  const cancelUploading = () => {
+    abortUploading()
+    reset()
   }
 
   const updateURL = (url: string) => {
@@ -77,17 +82,14 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
         base64,
         setProgress,
         () => updateURL(base64),
-        () => {
-          cancelUploading()
-          reset()
-        },
+        cancelUploading,
       )
 
       // save request to be able to abort it by clicking button
       setRequest(request)
     } catch (error) {
       setError(error.message)
-      cancelUploading()
+      abortUploading()
     }
   }
 
@@ -105,42 +107,22 @@ export const DropAndUpload = ({ value: url, onChange }: Props) => {
           onDragEnter={() => setHovering(true)}
           onDragLeave={() => setHovering(false)}
         >
-          {progress ? (
-            <div>{progress}</div>
-          ) : (
-            <div className="preview-container">
-              <img
-                className={`preview-container__image ${
-                  url ? 'preview-container__image-rounded' : ''
-                }`}
-                src={url || dropPlaceholder}
-                alt="Drop here"
-              />
-            </div>
-          )}
+          <Preview progress={progress} url={url} />
 
-          <span className="drop-container__icon-label">
-            {progress ? 'Uploading' : 'Drag & drop here'}
-          </span>
+          <p className="drop-container__or-separator">- or -</p>
 
-          <p>- or -</p>
-
-          <span>
-            {progress && request ? (
-              <button onClick={cancelUploading}>Cancel</button>
+          <div>
+            {progress ? (
+              <button onClick={cancelUploading} className="drop-container__cancel-button">
+                Cancel
+              </button>
             ) : (
-              <div>
-                <label htmlFor="fileInput">Select file to upload</label>
-                <input
-                  type="file"
-                  name="fileInput"
-                  id="fileInput"
-                  accept={imageParams.imageTypes.join(',')}
-                  onChange={inputUpload}
-                />
-              </div>
+              <FileInput
+                accept={imageParams.imageTypes.join(',')}
+                onChange={inputUpload}
+              />
             )}
-          </span>
+          </div>
 
           {error && <p>{error}</p>}
         </div>
