@@ -1,4 +1,4 @@
-@import '../variables.scss';
+@import '../styles/variables.scss';
 
 .drop-container {
   width: 400px;
@@ -33,8 +33,9 @@
 
   &__or-separator {
     font-size: 12px;
-    margin: 10px 0 5px 0;
     line-height: 15px;
+    
+    margin: 8px 0 0px 0;
     color: $secondary;
   }
 

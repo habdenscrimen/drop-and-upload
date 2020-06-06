@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 import { DropAndUpload } from './drop-and-upload'
-import './styles.scss'
+import './styles/global.scss'
 
 const App = () => {
   const [imageURL, setImageURL] = useState<string>(null)
