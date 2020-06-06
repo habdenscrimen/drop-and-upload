@@ -54,6 +54,7 @@ export const DropAndUpload = ({
       e.preventDefault()
       setDragging(false)
 
+      console.debug('validating')
       const { files } = e.dataTransfer || e.target
 
       // validate files length
@@ -70,9 +71,11 @@ export const DropAndUpload = ({
       }
 
       // read file
+      console.debug('reading image data')
       const imageData = await fileToBase64(files[0])
 
       // validate file resolution
+      console.debug('validating image resolution')
       const valid = await validateImageResolution(
         imageData,
         imageResolution,
@@ -89,11 +92,13 @@ export const DropAndUpload = ({
       setUpload({ request })
 
       // upload image
+      console.debug('uploading image')
       const newUrl = await uploadImage(request, imageData, (percentage) => {
         setUpload({ request, progress: percentage })
       })
 
       // set new url
+      console.debug('uploaded')
       setUpload({})
       setUrl(newUrl)
     } catch (error) {
